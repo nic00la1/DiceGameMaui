@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DiceGameMaui.MainPage">
+             x:Class="DiceGameMaui.MainPage"
+             xmlns:vm="clr-namespace:DiceGameMaui.MVVM.ViewModel">
+
+    <ContentPage.BindingContext>
+        <vm:DiceGameViewModel />
+    </ContentPage.BindingContext>
 
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
@@ -10,24 +15,54 @@
 
             <!-- Gracz 1 -->
             <Label Text="Kości Gracza 1:" FontAttributes="Bold" />
-            <Grid x:Name="Player1DiceGrid" ColumnSpacing="10" RowSpacing="10">
-                <!-- Kości będą generowane dynamicznie w C# -->
-            </Grid>
+            <CollectionView ItemsSource="{Binding Player1Dice}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5"
+                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center"/>
+                                <Button Text="Wybierz"
+                                        Command="{Binding BindingContext.ToggleDiceCommand, Source={x:Reference Name=MainPage}}"
+                                        CommandParameter="{Binding .}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <!-- Gracz 2 -->
             <Label Text="Kości Gracza 2:" FontAttributes="Bold" />
-            <Grid x:Name="Player2DiceGrid" ColumnSpacing="10" RowSpacing="10">
-                <!-- Kości będą generowane dynamicznie w C# -->
-            </Grid>
+            <CollectionView ItemsSource="{Binding Player2Dice}" SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5"
+                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center"/>
+                                <Button Text="Wybierz"
+                                        Command="{Binding BindingContext.ToggleDiceCommand, Source={x:Reference Name=MainPage}}"
+                                        CommandParameter="{Binding .}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <!-- Przycisk Reroll i Restart -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Button x:Name="RerollButton" Text="Reroll" Clicked="OnRerollClicked" />
-                <Button x:Name="RestartButton" Text="Restart" Clicked="OnRestartClicked" />
+                <Button Text="Reroll" Command="{Binding RerollCommand}" IsEnabled="{Binding RerollUsed, Converter={StaticResource InverseBoolConverter}}"/>
+                <Button Text="Restart" Command="{Binding RestartCommand}"/>
             </HorizontalStackLayout>
 
             <!-- Wyniki -->
-            <Label x:Name="ResultLabel" FontSize="18" HorizontalOptions="Center" />
+            <Label Text="{Binding Result}" FontSize="18" HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
     </ScrollView>
