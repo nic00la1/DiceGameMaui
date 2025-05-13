@@ -96,17 +96,37 @@ namespace DiceGameMaui.MVVM.ViewModel
             ShowResults();
         }
 
+        private string _resultColor;
+        public string ResultColor
+        {
+            get => _resultColor;
+            set
+            {
+                _resultColor = value;
+                OnPropertyChanged();
+            }
+        }
+
         void ShowResults()
         {
             int p1 = CountPoints(Player1Dice.Select(d => d.Value).ToArray());
             int p2 = CountPoints(Player2Dice.Select(d => d.Value).ToArray());
 
             if (p1 > p2)
+            {
                 Result = $"Gracz 1: {p1} pkt, Gracz 2: {p2} pkt\nWygrywa Gracz 1!";
+                ResultColor = "#4CAF50"; // Zielony dla zwycięzcy
+            }
             else if (p2 > p1)
+            {
                 Result = $"Gracz 1: {p1} pkt, Gracz 2: {p2} pkt\nWygrywa Gracz 2!";
+                ResultColor = "#4CAF50"; // Zielony dla zwycięzcy
+            }
             else
+            {
                 Result = $"Gracz 1: {p1} pkt, Gracz 2: {p2} pkt\nRemis!";
+                ResultColor = "#FFC107"; // Żółty dla remisu
+            }
         }
 
         int CountPoints(int[] dice)

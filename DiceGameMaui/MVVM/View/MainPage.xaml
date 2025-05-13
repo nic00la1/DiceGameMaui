@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="DiceGameMaui.MainPage"
     xmlns:vm="clr-namespace:DiceGameMaui.MVVM.ViewModel"
-    xmlns:converters="clr-namespace:DiceGameMaui.Converters">
+    xmlns:converters="clr-namespace:DiceGameMaui.Converters"
+    BackgroundColor="White">
 
     <ContentPage.BindingContext>
         <vm:DiceGameViewModel />
@@ -11,62 +12,100 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
-            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <Style x:Key="DiceFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="BackgroundColor" Value="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}" />
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="BackgroundColor" Value="#4CAF50" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="WidthRequest" Value="150" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
-            <Label Text="Gra w kości - 2 Graczy" FontSize="24" HorizontalOptions="Center" />
+            <!-- Nagłówek -->
+            <Label Text="Gra w kości - 2 Graczy"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#333" />
 
             <!-- Gracz 1 -->
-            <Label Text="Kości Gracza 1:" FontAttributes="Bold" />
+            <Label Text="Kości Gracza 1:"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   TextColor="#555" />
             <CollectionView x:Name="Player1CollectionView" ItemsSource="{Binding Player1Dice}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal"/>
+                    <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" 
-                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                        <Frame Style="{StaticResource DiceFrameStyle}">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ToggleCommand}" />
                             </Frame.GestureRecognizers>
-                            <Image Source="{Binding ImageSource}" WidthRequest="50" HeightRequest="50" />
+                            <Image Source="{Binding ImageSource}" WidthRequest="70" HeightRequest="70" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <!-- Gracz 2 -->
-            <Label Text="Kości Gracza 2:" FontAttributes="Bold" />
+            <Label Text="Kości Gracza 2:"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   TextColor="#555" />
             <CollectionView x:Name="Player2CollectionView" ItemsSource="{Binding Player2Dice}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal"/>
+                    <LinearItemsLayout Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" 
-                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                        <Frame Style="{StaticResource DiceFrameStyle}">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ToggleCommand}" />
                             </Frame.GestureRecognizers>
-                            <Image Source="{Binding ImageSource}" WidthRequest="50" HeightRequest="50" />
+                            <Image Source="{Binding ImageSource}" WidthRequest="70" HeightRequest="70" />
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <!-- Wyniki -->
+            <Frame BackgroundColor="#F5F5F5" CornerRadius="15" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="Wynik gry:"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#333" />
+                    <Label Text="{Binding Result}"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           TextColor="{Binding ResultColor}" />
+                </VerticalStackLayout>
+            </Frame>
+
             <!-- Przycisk Reroll i Restart -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Button Text="Reroll" Command="{Binding RerollCommand}" IsEnabled="{Binding RerollUsed, Converter={StaticResource InverseBoolConverter}}"/>
-                <Button Text="Restart" Command="{Binding RestartCommand}"/>
+                <Button Text="Reroll"
+                        Command="{Binding RerollCommand}"
+                        IsEnabled="{Binding RerollUsed, Converter={StaticResource InverseBoolConverter}}"
+                        Style="{StaticResource ButtonStyle}" />
+                <Button Text="Restart"
+                        Command="{Binding RestartCommand}"
+                        Style="{StaticResource ButtonStyle}" />
             </HorizontalStackLayout>
-
-            <!-- Wyniki -->
-            <Label Text="{Binding Result}" FontSize="18" HorizontalOptions="Center"/>
 
         </VerticalStackLayout>
     </ScrollView>
