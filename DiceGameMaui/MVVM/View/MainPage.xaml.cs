@@ -18,6 +18,28 @@ namespace DiceGameMaui
                 await frame.ScaleTo(1.0, 100, Easing.CubicOut);
             }
         }
+
+        public async Task AnimateDiceRolls()
+        {
+            // Animacja dla gracza 1
+            foreach (var dice in ((DiceGameViewModel)BindingContext).Player1Dice)
+            {
+                dice.Value = new Random().Next(1, 7); // Symulacja rzutu
+                await Task.Delay(300); // Opóźnienie między rzutami
+            }
+
+            // Animacja dla gracza 2
+            foreach (var dice in ((DiceGameViewModel)BindingContext).Player2Dice)
+            {
+                dice.Value = new Random().Next(1, 7); // Symulacja rzutu
+                await Task.Delay(300); // Opóźnienie między rzutami
+            }
+        }
+
+        private async void OnRerollClicked(object sender, EventArgs e)
+        {
+            await AnimateDiceRolls();
+        }
     }
 
 }
