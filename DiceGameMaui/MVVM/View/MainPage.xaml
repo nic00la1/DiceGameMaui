@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DiceGameMaui.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Gra w kości - 2 Graczy" FontSize="24" HorizontalOptions="Center" />
+
+            <!-- Gracz 1 -->
+            <Label Text="Kości Gracza 1:" FontAttributes="Bold" />
+            <Grid x:Name="Player1DiceGrid" ColumnSpacing="10" RowSpacing="10">
+                <!-- Kości będą generowane dynamicznie w C# -->
+            </Grid>
+
+            <!-- Gracz 2 -->
+            <Label Text="Kości Gracza 2:" FontAttributes="Bold" />
+            <Grid x:Name="Player2DiceGrid" ColumnSpacing="10" RowSpacing="10">
+                <!-- Kości będą generowane dynamicznie w C# -->
+            </Grid>
+
+            <!-- Przycisk Reroll i Restart -->
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <Button x:Name="RerollButton" Text="Reroll" Clicked="OnRerollClicked" />
+                <Button x:Name="RestartButton" Text="Restart" Clicked="OnRestartClicked" />
+            </HorizontalStackLayout>
+
+            <!-- Wyniki -->
+            <Label x:Name="ResultLabel" FontSize="18" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
