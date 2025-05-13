@@ -23,19 +23,20 @@
 
             <!-- Gracz 1 -->
             <Label Text="Kości Gracza 1:" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Player1Dice}" SelectionMode="None">
+            <CollectionView x:Name="Player1CollectionView" ItemsSource="{Binding Player1Dice}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5"
+                        <Frame x:Name="DiceFrame"
+                               Padding="10" Margin="5"
                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCommand}" Tapped="OnDiceTapped"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout>
                                 <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center" TextColor="Black"/>
-                                <!--<Button Text="Wybierz"
-                                        Command="{Binding ToggleDiceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                        CommandParameter="{Binding .}"/>-->
                                 <Button Text="Wybierz" Command="{Binding ToggleCommand}" />
                             </VerticalStackLayout>
                         </Frame>
@@ -45,14 +46,18 @@
 
             <!-- Gracz 2 -->
             <Label Text="Kości Gracza 2:" FontAttributes="Bold" />
-            <CollectionView ItemsSource="{Binding Player2Dice}" SelectionMode="None">
+            <CollectionView x:Name="Player2CollectionView" ItemsSource="{Binding Player2Dice}" SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5"
-                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                        <Frame x:Name="DiceFrame"
+                           Padding="10" Margin="5"
+                           BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCommand}" Tapped="OnDiceTapped"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout>
                                 <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center" TextColor="Black"/>
                                 <Button Text="Wybierz" Command="{Binding ToggleCommand}" />
