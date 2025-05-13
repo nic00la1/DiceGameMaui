@@ -68,8 +68,8 @@ namespace DiceGameMaui.MVVM.ViewModel
             Player2Dice.Clear();
             for (int i = 0; i < DiceCount; i++)
             {
-                Player1Dice.Add(new DiceViewModel { Value = random.Next(1, 7) });
-                Player2Dice.Add(new DiceViewModel { Value = random.Next(1, 7) });
+                Player1Dice.Add(new DiceViewModel { Value = random.Next(1, 7), CanBeSelected = true });
+                Player2Dice.Add(new DiceViewModel { Value = random.Next(1, 7), CanBeSelected = true });
             }
             Result = string.Empty;
             RerollUsed = false;
@@ -78,15 +78,17 @@ namespace DiceGameMaui.MVVM.ViewModel
 
         public void RerollSelectedDice()
         {
-            foreach (var dice in Player1Dice.Where(d => d.IsSelected))
+            foreach (var dice in Player1Dice)
             {
                 dice.Value = random.Next(1, 7);
-                dice.IsSelected = false;
+                dice.IsSelected = false; // Resetujemy zaznaczenie
+                dice.CanBeSelected = false; // Wyłączamy możliwość wybierania
             }
-            foreach (var dice in Player2Dice.Where(d => d.IsSelected))
+            foreach (var dice in Player2Dice)
             {
                 dice.Value = random.Next(1, 7);
-                dice.IsSelected = false;
+                dice.IsSelected = false; // Resetujemy zaznaczenie
+                dice.CanBeSelected = false; // Wyłączamy możliwość wybierania
             }
             OnPropertyChanged(nameof(Player1Dice));
             OnPropertyChanged(nameof(Player2Dice));

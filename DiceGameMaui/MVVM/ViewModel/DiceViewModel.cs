@@ -21,6 +21,7 @@ namespace DiceGameMaui.MVVM.ViewModel
         }
 
         private bool _isSelected;
+        private bool _canBeSelected = true;
         public bool IsSelected
         {
             get => _isSelected;
@@ -35,6 +36,18 @@ namespace DiceGameMaui.MVVM.ViewModel
         }
 
         public ICommand ToggleCommand { get; }
+        public bool CanBeSelected
+        {
+            get => _canBeSelected;
+            set
+            {
+                if (_canBeSelected != value)
+                {
+                    _canBeSelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public DiceViewModel()
         {
@@ -43,7 +56,8 @@ namespace DiceGameMaui.MVVM.ViewModel
 
         public void Toggle()
         {
-            IsSelected = !IsSelected;
+            if (CanBeSelected)
+                IsSelected = !IsSelected;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
