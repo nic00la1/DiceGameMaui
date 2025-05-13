@@ -1,25 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiceGameMaui.MVVM.ViewModel
 {
-    public class DiceViewModel : INotifyPropertyChanged // Opisuje jedną kość
+    public class DiceViewModel : INotifyPropertyChanged
     {
-        public int Value { get; set; }
-        public bool IsSelected { get; set; }
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private int _value;
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public void Toggle()
         {
             IsSelected = !IsSelected;
-            OnPropertyChanged(nameof(IsSelected));
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
-             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

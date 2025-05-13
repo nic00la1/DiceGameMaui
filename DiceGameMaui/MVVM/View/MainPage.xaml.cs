@@ -6,7 +6,6 @@
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new DiceGameMaui.MVVM.ViewModel.DiceGameViewModel();
         }
     }
 
