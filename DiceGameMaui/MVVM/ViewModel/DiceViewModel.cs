@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace DiceGameMaui.MVVM.ViewModel
 {
@@ -31,6 +32,13 @@ namespace DiceGameMaui.MVVM.ViewModel
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public ICommand ToggleCommand { get; }
+
+        public DiceViewModel()
+        {
+            ToggleCommand = new Command(Toggle);
         }
 
         public void Toggle()

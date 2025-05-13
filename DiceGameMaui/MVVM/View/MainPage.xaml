@@ -33,9 +33,10 @@
                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
                             <VerticalStackLayout>
                                 <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center" TextColor="Black"/>
-                                <Button Text="Wybierz"
+                                <!--<Button Text="Wybierz"
                                         Command="{Binding ToggleDiceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                        CommandParameter="{Binding .}"/>
+                                        CommandParameter="{Binding .}"/>-->
+                                <Button Text="Wybierz" Command="{Binding ToggleCommand}" />
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
@@ -54,9 +55,7 @@
                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
                             <VerticalStackLayout>
                                 <Label Text="{Binding Value}" FontSize="32" HorizontalOptions="Center" TextColor="Black"/>
-                                <Button Text="Wybierz"
-                                        Command="{Binding ToggleDiceCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                        CommandParameter="{Binding .}"/>
+                                <Button Text="Wybierz" Command="{Binding ToggleCommand}" />
                             </VerticalStackLayout>
                         </Frame>
                     </DataTemplate>
