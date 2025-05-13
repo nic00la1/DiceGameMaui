@@ -29,7 +29,11 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="LightGray">
+                        <Frame Padding="10" Margin="5" 
+                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                            </Frame.GestureRecognizers>
                             <Image Source="{Binding ImageSource}" WidthRequest="50" HeightRequest="50" />
                         </Frame>
                     </DataTemplate>
@@ -44,7 +48,11 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="LightGray">
+                        <Frame Padding="10" Margin="5" 
+                               BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToColorConverter}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                            </Frame.GestureRecognizers>
                             <Image Source="{Binding ImageSource}" WidthRequest="50" HeightRequest="50" />
                         </Frame>
                     </DataTemplate>
@@ -53,7 +61,7 @@
 
             <!-- Przycisk Reroll i Restart -->
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Button Text="Reroll" Clicked="OnRerollClicked" IsEnabled="{Binding RerollUsed, Converter={StaticResource InverseBoolConverter}}" />
+                <Button Text="Reroll" Command="{Binding RerollCommand}" IsEnabled="{Binding RerollUsed, Converter={StaticResource InverseBoolConverter}}"/>
                 <Button Text="Restart" Command="{Binding RestartCommand}"/>
             </HorizontalStackLayout>
 

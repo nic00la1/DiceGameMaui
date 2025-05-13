@@ -7,6 +7,7 @@ namespace DiceGameMaui.MVVM.ViewModel
     public class DiceViewModel : INotifyPropertyChanged
     {
         public string ImageSource => $"dice{Value}.png";
+
         private int _value;
         public int Value
         {
@@ -17,6 +18,7 @@ namespace DiceGameMaui.MVVM.ViewModel
                 {
                     _value = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ImageSource)); // Powiadomienie o zmianie ImageSource
                 }
             }
         }

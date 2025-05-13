@@ -78,18 +78,17 @@ namespace DiceGameMaui.MVVM.ViewModel
 
         public void RerollSelectedDice()
         {
-            foreach (var dice in Player1Dice)
+            foreach (var dice in Player1Dice.Where(d => d.IsSelected))
             {
-                dice.Value = random.Next(1, 7);
+                dice.Value = random.Next(1, 7); // Losujemy nową wartość
                 dice.IsSelected = false; // Resetujemy zaznaczenie
-                dice.CanBeSelected = false; // Wyłączamy możliwość wybierania
             }
-            foreach (var dice in Player2Dice)
+            foreach (var dice in Player2Dice.Where(d => d.IsSelected))
             {
-                dice.Value = random.Next(1, 7);
+                dice.Value = random.Next(1, 7); // Losujemy nową wartość
                 dice.IsSelected = false; // Resetujemy zaznaczenie
-                dice.CanBeSelected = false; // Wyłączamy możliwość wybierania
             }
+
             OnPropertyChanged(nameof(Player1Dice));
             OnPropertyChanged(nameof(Player2Dice));
             RerollUsed = true;

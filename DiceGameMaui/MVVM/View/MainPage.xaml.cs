@@ -21,15 +21,17 @@ namespace DiceGameMaui
 
         public async Task AnimateDiceRolls()
         {
-            // Animacja dla gracza 1
-            foreach (var dice in ((DiceGameViewModel)BindingContext).Player1Dice)
+            // Tworzymy kopię kolekcji Player1Dice
+            var player1DiceCopy = ((DiceGameViewModel)BindingContext).Player1Dice.ToList();
+            foreach (var dice in player1DiceCopy)
             {
                 dice.Value = new Random().Next(1, 7); // Symulacja rzutu
                 await Task.Delay(300); // Opóźnienie między rzutami
             }
 
-            // Animacja dla gracza 2
-            foreach (var dice in ((DiceGameViewModel)BindingContext).Player2Dice)
+            // Tworzymy kopię kolekcji Player2Dice
+            var player2DiceCopy = ((DiceGameViewModel)BindingContext).Player2Dice.ToList();
+            foreach (var dice in player2DiceCopy)
             {
                 dice.Value = new Random().Next(1, 7); // Symulacja rzutu
                 await Task.Delay(300); // Opóźnienie między rzutami
